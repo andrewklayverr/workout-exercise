@@ -1,0 +1,40 @@
+.grupo-muscular-grid {
+  display: flex;
+  flex-direction: column; /* lista vertical */
+  gap: 12px;
+  align-items: stretch;
+  margin-top: 16px;
+}
+
+.grupo-btn {
+  width: 100%;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  background-color: #1e1e1e;
+  color: #f5f5f5;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.grupo-btn:hover {
+  background-color: #333;
+  transform: scale(1.02);
+}
+
+/* cores fixas por grupo */
+.grupo-btn.peito { border-left: 6px solid #c62828; }     /* vermelho sangue */
+.grupo-btn.ombro { border-left: 6px solid #1565c0; }     /* azul aço */
+.grupo-btn.triceps { border-left: 6px solid #ef6c00; }   /* laranja queimado */
+.grupo-btn.costas { border-left: 6px solid #6a1b9a; }    /* roxo profundo */
+.grupo-btn.biceps { border-left: 6px solid #2e7d32; }    /* verde militar */
+.grupo-btn.pernas { border-left: 6px solid #f9a825; }    /* amarelo ouro */
+.grupo-btn.abdomen { border-left: 6px solid #757575; }   /* cinza metálico */
+.grupo-btn.cardio { border-left: 6px solid #00bcd4; }    /* azul turquesa */
+
+/* estado selecionado */
+.grupo-btn.selected {
+  background-color: #222;
+  font-weight: bold;
+}

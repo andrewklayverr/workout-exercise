@@ -36,3 +36,36 @@
     transform: rotate(360deg);
   }
 }
+
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  padding: 1rem;
+  background-color: #121212; /* fundo dark */
+  border-bottom: 1px solid #333;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #f5f5f5;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: background-color 0.3s, color 0.3s, transform 0.2s;
+}
+
+.nav-link:hover {
+  background-color: #1e1e1e;
+  transform: scale(1.05);
+}
+
+/* cores neon para cada link */
+.nav-link:nth-child(1):hover { color: #00ff88; } /* Treinos */
+.nav-link:nth-child(2):hover { color: #00aaff; } /* Registrar */
+.nav-link:nth-child(3):hover { color: #ff4444; } /* Admin */

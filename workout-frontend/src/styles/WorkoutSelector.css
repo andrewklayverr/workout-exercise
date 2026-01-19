@@ -1,0 +1,70 @@
+.workout-selector {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 16px;
+  background-color: #121212; /* fundo dark */
+  color: #f5f5f5;
+  border-radius: 8px;
+}
+
+.titulo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 12px;
+  margin-bottom: 16px;
+  text-align: center;
+  color: #f5f5f5;
+}
+
+.button-grid {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 32px;
+
+  /* espaçamento lateral para não encostar nas bordas */
+  padding: 0 16px;
+}
+
+.treino-btn {
+  padding: 12px 24px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #1e1e1e;
+  color: #f5f5f5;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.3s;
+}
+
+.treino-btn:hover {
+  transform: scale(1.05);
+  background-color: #333;
+}
+
+/* cores específicas para cada treino */
+.treino-btn.selected:nth-child(1) { background-color: #00ff88; color: #121212; }
+.treino-btn.selected:nth-child(2) { background-color: #00aaff; color: #121212; }
+.treino-btn.selected:nth-child(3) { background-color: #ffcc00; color: #121212; }
+.treino-btn.selected:nth-child(4) { background-color: #ff4444; color: #121212; }
+
+.muscle-group-container {
+  margin-top: 24px;
+  background-color: #1e1e1e;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.6);
+}
+
+/* responsivo: em telas pequenas, botões ficam em coluna */
+@media (max-width: 480px) {
+  .button-grid {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .treino-btn {
+    width: 100%;       /* ocupa toda a largura disponível */
+    text-align: center;
+  }
+}

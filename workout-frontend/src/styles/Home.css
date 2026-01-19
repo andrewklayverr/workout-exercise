@@ -1,0 +1,11 @@
+.home-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.home-container h1 {
+  margin-bottom: 2rem;
+  color: #333;
+}
