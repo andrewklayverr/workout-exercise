@@ -9,7 +9,7 @@ const muscleGroupsByDay = {
   D: ['Abdômen reto', 'Oblíquos', 'Core', 'Cardio']
 };
 
-// mapeia cada grupo para uma tag CSS
+
 const groupTags = {
   'Peito': 'peito',
   'Ombro (deltoide anterior)': 'ombro',

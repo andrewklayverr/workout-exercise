@@ -35,7 +35,7 @@ const ProgressDashboard = () => {
     <div className="dashboard">
       <h2 className="dashboard-title">📊 Progresso dos Treinos</h2>
 
-      {/* Cards horizontais roláveis */}
+     
       <div className="cards-container">
         {Object.entries(stats).map(([day, count]) => (
           <div key={day} className="card">

@@ -7,7 +7,7 @@ const WorkoutSelector = () => {
   const days = ['A', 'B', 'C', 'D'];
 
   const handleSelect = (day) => {
-    // se clicar no mesmo treino, desmarca
+   
     setSelectedDay((prev) => (prev === day ? null : day));
   };
 
