@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import api from '../services/api';
 import '../styles/ExerciseList.css';
+import useWorkoutStore from '../store/useWorkoutStore';
 
 function ExerciseList({ day, group }) {
   const [exercises, setExercises] = useState([]);
@@ -8,12 +9,19 @@ function ExerciseList({ day, group }) {
   const [history, setHistory] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [editForm, setEditForm] = useState({});
+  const incrementStat = useWorkoutStore((state) => state.incrementStat);
 
   const fetchHistory = useCallback(() => {
     api.get(`/workouts/${day}`)
       .then(res => {
-        setHistory(res.data);
-        setCompleted(res.data.map(item => item.exerciseId?._id));
+        const today = new Date().toISOString().slice(0, 10);
+        const todayHistory = res.data.filter(item => {
+          const itemDate = new Date(item.date).toISOString().slice(0, 10);
+          return itemDate === today;
+        });
+
+        setHistory(todayHistory);
+        setCompleted(todayHistory.map(item => item.exerciseId?._id));
       })
       .catch(err => console.error('Erro ao buscar histórico:', err));
   }, [day]);
@@ -33,6 +41,7 @@ function ExerciseList({ day, group }) {
       await api.post('/workouts', { exerciseId: id, day });
       setCompleted(prev => [...prev, id]);
       fetchHistory();
+      incrementStat(day); // ✅ Atualiza o progresso global em tempo real
     } catch (err) {
       console.error('Erro ao salvar histórico:', err.response?.data || err);
     }

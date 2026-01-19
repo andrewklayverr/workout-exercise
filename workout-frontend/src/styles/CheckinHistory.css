@@ -1,0 +1,123 @@
+.checkin-history {
+  padding: 2rem 1rem;
+  max-width: 800px;
+  margin: auto;
+  color: #f0f0f0;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.checkin-history h2 {
+  font-size: 1.6rem;
+  margin-bottom: 1.2rem;
+  color: #00bcd4;
+  text-align: center;
+}
+
+.tempo {
+  font-size: 3rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #4caf50;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 2px;
+}
+
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 0.75rem 1rem;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  text-align: center;
+  animation: fadeInOut 3s ease-in-out;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.btn-iniciar,
+.btn-finalizar {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto 1.5rem;
+  padding: 1rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-iniciar {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.btn-iniciar:hover {
+  background-color: #43a047;
+}
+
+.btn-finalizar {
+  background-color: #f44336;
+  color: #fff;
+}
+
+.btn-finalizar:hover {
+  background-color: #e53935;
+}
+
+.checkin-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 1rem;
+}
+
+.checkin-item {
+  background-color: #1e1e1e;
+  border: 1px solid #333;
+  border-radius: 6px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  transition: background 0.3s;
+}
+
+.checkin-item:hover {
+  background-color: #2a2a2a;
+}
+
+.checkin-item strong {
+  color: #00bcd4;
+  font-size: 1.1rem;
+}
+
+.checkin-item span {
+  display: block;
+  margin-top: 0.3rem;
+  font-size: 0.95rem;
+  color: #ccc;
+}
+
+/* Responsivo para telas menores */
+@media (max-width: 480px) {
+  .tempo {
+    font-size: 2.2rem;
+  }
+
+  .btn-iniciar,
+  .btn-finalizar {
+    font-size: 1rem;
+    padding: 0.9rem;
+  }
+
+  .checkin-history h2 {
+    font-size: 1.4rem;
+  }
+}

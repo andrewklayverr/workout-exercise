@@ -1,41 +1,42 @@
 import React, { useEffect, useState } from "react";
 import api from "../services/api";
 import "../styles/ProgressDashboard.css";
+import useWorkoutStore from "../store/useWorkoutStore";
 
 const ProgressDashboard = () => {
-  const [stats, setStats] = useState({ A: 0, B: 0, C: 0, D: 0 });
+  const stats = useWorkoutStore((state) => state.stats);
+  const setStats = useWorkoutStore((state) => state.setStats);
   const [history, setHistory] = useState([]);
 
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const days = ["A", "B", "C", "D"];
-        const newStats = {};
-        for (const day of days) {
-          const res = await api.get(`/workouts/${day}`);
-          newStats[day] = res.data.length;
-        }
-        setStats(newStats);
+        const res = await api.get('/workouts/today/summary');
+        setStats(res.data);
 
-        const allHistory = (await Promise.all(days.map(d => api.get(`/workouts/${d}`))))
+        const days = ['A', 'B', 'C', 'D'];
+        const todayHistory = (await Promise.all(
+          days.map(day => api.get(`/workouts/${day}`))
+        ))
           .flatMap(r => r.data)
           .sort((a, b) => new Date(b.date) - new Date(a.date))
           .slice(0, 5);
 
-        setHistory(allHistory);
+        setHistory(todayHistory);
       } catch (err) {
         console.error("Erro ao buscar estatísticas:", err);
       }
     };
 
     fetchStats();
-  }, []);
+  }, [setStats]);
+
+  const totalPorTreino = 6;
 
   return (
     <div className="dashboard">
       <h2 className="dashboard-title">📊 Progresso dos Treinos</h2>
 
-     
       <div className="cards-container">
         {Object.entries(stats).map(([day, count]) => (
           <div key={day} className="card">
@@ -44,14 +45,13 @@ const ProgressDashboard = () => {
             <div className="progress-bar">
               <div
                 className="progress-fill"
-                style={{ width: `${Math.min(count * 10, 100)}%` }}
+                style={{ width: `${Math.min((count / totalPorTreino) * 100, 100)}%` }}
               ></div>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Histórico */}
       <h3 className="history-title">🕒 Últimos exercícios concluídos</h3>
       <ul className="history-list">
         {history.map(item => (
