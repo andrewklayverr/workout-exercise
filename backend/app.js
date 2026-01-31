@@ -3,31 +3,35 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
 
-// Carrega variáveis de ambiente
 dotenv.config({
   path: process.env.NODE_ENV === 'development' ? '.env.development' : '.env'
 });
 
 console.log('MONGO_URI:', process.env.MONGO_URI);
+console.log('FRONTEND_URL:', process.env.FRONTEND_URL); 
 
-// Importa rotas
+
 const exerciseRoutes = require('./routes/exerciseRoutes');
 const workoutRoutes = require('./routes/workoutRoutes');
-const authRoutes = require('./routes/auth.routes'); // ✅ NOVO
+const authRoutes = require('./routes/auth.routes');
 
 const app = express();
-app.use(cors());
+
+
+app.use(cors({
+  origin: process.env.FRONTEND_URL || '*', 
+  credentials: true
+}));
+
 app.use(express.json());
 
-// Conexão com o MongoDB
+
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB Atlas conectado'))
   .catch(err => console.error('Erro ao conectar ao MongoDB:', err));
 
-// Rotas públicas
-app.use('/api/auth', authRoutes); 
 
-// Rotas protegidas (exercícios e treinos)
+app.use('/api/auth', authRoutes);
 app.use('/api/exercises', exerciseRoutes);
 app.use('/api/workouts', workoutRoutes);
 
