@@ -1,57 +1,59 @@
 .checkin-history {
-  padding: 2rem 1rem;
-  max-width: 800px;
+  background-color: #0d1117;
+  color: #e0e0e0;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 400px;
   margin: auto;
-  color: #f0f0f0;
   font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.checkin-history h2 {
-  font-size: 1.6rem;
-  margin-bottom: 1.2rem;
+h2 {
   color: #00bcd4;
+  font-size: 1.6rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  width: 100%;
+}
+
+select {
+  background-color: #1c1f26;
+  color: #e0e0e0;
+  border: 1px solid #444;
+  padding: 0.5rem 0.8rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  width: 100%;
+  margin-bottom: 2rem;
   text-align: center;
 }
 
 .tempo {
-  font-size: 3rem;
+  font-size: 2.2rem;
   font-weight: bold;
   text-align: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   color: #4caf50;
-  font-family: 'Courier New', monospace;
-  letter-spacing: 2px;
-}
-
-.success-message {
-  background-color: #d4edda;
-  color: #155724;
-  padding: 0.75rem 1rem;
-  border-radius: 5px;
-  margin-bottom: 1rem;
-  font-size: 1rem;
-  text-align: center;
-  animation: fadeInOut 3s ease-in-out;
-}
-
-@keyframes fadeInOut {
-  0% { opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { opacity: 0; }
 }
 
 .btn-iniciar,
 .btn-finalizar {
   display: block;
   width: 100%;
-  max-width: 300px;
-  margin: 0 auto 1.5rem;
-  padding: 1rem;
-  font-size: 1.1rem;
+  padding: 0.8rem;
+  font-size: 1rem;
   font-weight: bold;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
   transition: background 0.3s;
 }
@@ -74,50 +76,32 @@
   background-color: #e53935;
 }
 
+.success-message {
+  background-color: #2e7d32;
+  color: #fff;
+  padding: 0.6rem;
+  border-radius: 4px;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
 .checkin-list {
   list-style: none;
   padding: 0;
   margin-top: 1rem;
+  width: 100%;
 }
 
 .checkin-item {
-  background-color: #1e1e1e;
+  background-color: #1c1f26;
   border: 1px solid #333;
   border-radius: 6px;
   padding: 1rem;
   margin-bottom: 1rem;
-  transition: background 0.3s;
-}
-
-.checkin-item:hover {
-  background-color: #2a2a2a;
+  font-size: 0.95rem;
 }
 
 .checkin-item strong {
   color: #00bcd4;
-  font-size: 1.1rem;
-}
-
-.checkin-item span {
-  display: block;
-  margin-top: 0.3rem;
-  font-size: 0.95rem;
-  color: #ccc;
-}
-
-/* Responsivo para telas menores */
-@media (max-width: 480px) {
-  .tempo {
-    font-size: 2.2rem;
-  }
-
-  .btn-iniciar,
-  .btn-finalizar {
-    font-size: 1rem;
-    padding: 0.9rem;
-  }
-
-  .checkin-history h2 {
-    font-size: 1.4rem;
-  }
+  font-size: 1.05rem;
 }
