@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import '../styles/CheckinHistory.css';
+import { AuthContext } from '../context/AuthContext';
 
 const formatTime = (seconds) => {
   const h = String(Math.floor(seconds / 3600)).padStart(2, '0');
@@ -16,14 +18,31 @@ const formatDate = (iso) => {
   });
 };
 
-const CheckinPage = () => {
+const  TemporizadorPage = () => {
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
+
   const [checkins, setCheckins] = useState([]);
   const [isRunning, setIsRunning] = useState(false);
   const [startTime, setStartTime] = useState(null);
   const [elapsed, setElapsed] = useState(0);
   const [intervalId, setIntervalId] = useState(null);
-  const [day] = useState('A');
+  const [day, setDay] = useState('A');
   const [successMessage, setSuccessMessage] = useState('');
+
+  // Protege a rota
+  useEffect(() => {
+    if (!user) navigate('/login');
+  }, [user, navigate]);
+
+  // Limpa o cronômetro ao desmontar
+  useEffect(() => {
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
+  }, [intervalId]);
 
   const fetchCheckins = async () => {
     try {
@@ -36,12 +55,31 @@ const CheckinPage = () => {
 
   useEffect(() => {
     fetchCheckins();
+
+    const savedStart = localStorage.getItem('checkinStart');
+    const savedDay = localStorage.getItem('checkinDay');
+
+    if (savedStart && savedDay) {
+      const start = parseInt(savedStart);
+      setStartTime(start);
+      setDay(savedDay);
+      setIsRunning(true);
+      const id = setInterval(() => {
+        setElapsed(Math.floor((Date.now() - start) / 1000));
+      }, 1000);
+      setIntervalId(id);
+    }
   }, []);
 
   const startTimer = () => {
+    if (isRunning) return;
+
     const now = Date.now();
     setStartTime(now);
     setIsRunning(true);
+    localStorage.setItem('checkinStart', now);
+    localStorage.setItem('checkinDay', day);
+
     const id = setInterval(() => {
       setElapsed(Math.floor((Date.now() - now) / 1000));
     }, 1000);
@@ -49,13 +87,23 @@ const CheckinPage = () => {
   };
 
   const stopTimer = async () => {
-    clearInterval(intervalId);
+    if (intervalId) {
+      clearInterval(intervalId);
+      setIntervalId(null);
+    }
+
+    const finalElapsed = Math.floor((Date.now() - startTime) / 1000);
+
     setIsRunning(false);
+    setElapsed(0);
+    setStartTime(null);
+    localStorage.removeItem('checkinStart');
+    localStorage.removeItem('checkinDay');
 
     try {
       await api.post('/workouts/checkin', {
         day,
-        duration: elapsed,
+        duration: finalElapsed,
         startedAt: new Date(startTime).toISOString(),
         endedAt: new Date().toISOString()
       });
@@ -65,14 +113,25 @@ const CheckinPage = () => {
     } catch (err) {
       console.error('Erro ao salvar check-in:', err);
     }
-
-    setElapsed(0);
-    setStartTime(null);
   };
 
   return (
     <div className="checkin-history">
-      <h2>Check-in do Treino</h2>
+      <h2>Temporizador de Treino</h2>
+
+      <label htmlFor="day-select">Selecione o dia do treino:</label>
+      <select
+        id="day-select"
+        value={day}
+        onChange={(e) => setDay(e.target.value)}
+        disabled={isRunning}
+      >
+        <option value="A">Treino A</option>
+        <option value="B">Treino B</option>
+        <option value="C">Treino C</option>
+        <option value="D">Treino D</option>
+      </select>
+
       <p className="tempo">{formatTime(elapsed)}</p>
 
       {successMessage && (
@@ -80,16 +139,16 @@ const CheckinPage = () => {
       )}
 
       {!isRunning ? (
-        <button onClick={startTimer} className="btn-iniciar">✅ Iniciar Check-in</button>
+        <button onClick={startTimer} className="btn-iniciar"> Iniciar Temporizador </button>
       ) : (
-        <button onClick={stopTimer} className="btn-finalizar">🛑 Finalizar</button>
+        <button onClick={stopTimer} className="btn-finalizar"> Finalizar</button>
       )}
 
       <hr style={{ margin: '2rem 0', borderColor: '#444' }} />
 
-      <h2>📋 Histórico de Check-ins</h2>
+      <h2>Histórico de Temporizador</h2>
       {checkins.length === 0 ? (
-        <p>Nenhum check-in registrado ainda.</p>
+        <p>Nenhum cronometro registrado ainda.</p>
       ) : (
         <ul className="checkin-list">
           {checkins.map((item) => (
@@ -106,4 +165,4 @@ const CheckinPage = () => {
   );
 };
 
-export default CheckinPage;
+export default TemporizadorPage;

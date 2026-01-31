@@ -1,36 +1,49 @@
-import React, { useState } from 'react';
-import ExerciseList from './ExerciseList';
-import '../styles/MuscleGroupList.css';
+import React, { useState } from "react";
+import ExerciseList from "./ExerciseList";
+import "../styles/MuscleGroupList.css";
 
 const muscleGroupsByDay = {
-  A: ['Peito', 'Ombro (deltoide anterior)', 'Deltoide lateral', 'Tríceps'],
-  B: ['Costas (latíssimo)', 'Trapézio', 'Deltoide posterior', 'Lombar', 'Bíceps', 'Antebraço'],
-  C: ['Quadríceps', 'Posterior (isquiotibiais)', 'Panturrilha', 'Glúteos', 'Adutores', 'Abdutores'],
-  D: ['Abdômen reto', 'Oblíquos', 'Core', 'Cardio']
+  A: ["Peito", "Ombro (deltoide anterior)", "Deltoide lateral", "Tríceps"],
+  B: [
+    "Costas (latíssimo)",
+    "Trapézio",
+    "Deltoide posterior",
+    "Lombar",
+    "Bíceps",
+    "Antebraço",
+  ],
+  C: [
+    "Quadríceps",
+    "Posterior",
+    "Panturrilha",
+    "Glúteos",
+    "Adutores",
+    "Abdutores",
+  ],
+  D: ["Abdômen reto", "Oblíquos", "Core", "Cardio"],
 };
 
-
 const groupTags = {
-  'Peito': 'peito',
-  'Ombro (deltoide anterior)': 'ombro',
-  'Deltoide lateral': 'ombro',
-  'Tríceps': 'triceps',
-  'Costas (latíssimo)': 'costas',
-  'Trapézio': 'costas',
-  'Deltoide posterior': 'ombro',
-  'Lombar': 'costas',
-  'Bíceps': 'biceps',
-  'Antebraço': 'biceps',
-  'Quadríceps': 'pernas',
-  'Posterior (isquiotibiais)': 'pernas',
-  'Panturrilha': 'pernas',
-  'Glúteos': 'pernas',
-  'Adutores': 'pernas',
-  'Abdutores': 'pernas',
-  'Abdômen reto': 'abdomen',
-  'Oblíquos': 'abdomen',
-  'Core': 'abdomen',
-  'Cardio': 'cardio'
+  Peito: "peito",
+  "Ombro (deltoide anterior)": "ombro",
+  "Deltoide lateral": "ombro",
+  Tríceps: "triceps",
+  "Costas (latíssimo)": "costas",
+  Trapézio: "costas",
+  "Deltoide posterior": "ombro",
+  Lombar: "costas",
+  Bíceps: "biceps",
+  Antebraço: "biceps",
+  Quadríceps: "pernas",
+  Posterior: "pernas",
+  Panturrilha: "pernas",
+  Glúteos: "pernas",
+  Adutores: "pernas",
+  Abdutores: "pernas",
+  "Abdômen reto": "abdomen",
+  Oblíquos: "abdomen",
+  Core: "abdomen",
+  Cardio: "cardio",
 };
 
 const MuscleGroupList = ({ day }) => {
@@ -50,7 +63,7 @@ const MuscleGroupList = ({ day }) => {
           <button
             key={group}
             onClick={() => handleSelectGroup(group)}
-            className={`grupo-btn ${groupTags[group]} ${selectedGroup === group ? 'selected' : ''}`}
+            className={`grupo-btn ${groupTags[group]} ${selectedGroup === group ? "selected" : ""}`}
           >
             {group}
           </button>
@@ -58,7 +71,7 @@ const MuscleGroupList = ({ day }) => {
       </div>
 
       {selectedGroup && (
-        <div style={{ marginTop: '2rem' }}>
+        <div style={{ marginTop: "2rem" }}>
           <ExerciseList day={day} group={selectedGroup} />
         </div>
       )}

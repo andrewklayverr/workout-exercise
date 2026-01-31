@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const WorkoutSchema = new mongoose.Schema({
   exerciseId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Exercise',   // precisa bater com o nome do modelo Exercise
+    ref: 'Exercise',   
     required: true
   },
   day: {

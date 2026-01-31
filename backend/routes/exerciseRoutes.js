@@ -1,11 +1,25 @@
 const express = require('express');
 const router = express.Router();
-const Exercise = require('../models/Exercise'); // ✅ Import correto
+const Exercise = require('../models/Exercise');
 
-// Criar novo exercício
+// Criar novo exercício (aluno ou personal)
 router.post('/', async (req, res) => {
   try {
-    const { name, day, sets, reps, mediaUrl, description, muscleGroup } = req.body;
+    const {
+      name,
+      day,
+      sets,
+      reps,
+      mediaUrl,
+      description,
+      muscleGroup,
+      alunoId,
+      personalId
+    } = req.body;
+
+    if (!name || !day || !muscleGroup || !sets || !reps) {
+      return res.status(400).json({ error: "Campos obrigatórios ausentes." });
+    }
 
     const exercise = new Exercise({
       name,
@@ -14,7 +28,9 @@ router.post('/', async (req, res) => {
       reps,
       mediaUrl,
       description,
-      muscleGroup
+      muscleGroup,
+      alunoId: alunoId || null,
+      personalId: personalId || null
     });
 
     await exercise.save();
@@ -24,14 +40,17 @@ router.post('/', async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 });
-// Buscar exercícios usando query params
+
+// Buscar exercícios com filtros opcionais
 router.get('/', async (req, res) => {
   try {
-    const { day, group } = req.query;
+    const { day, group, alunoId, personalId } = req.query;
 
     const filter = {};
     if (day) filter.day = day.toUpperCase();
     if (group) filter.muscleGroup = group;
+    if (alunoId) filter.alunoId = alunoId;
+    if (personalId) filter.personalId = personalId;
 
     const exercises = await Exercise.find(filter);
     res.json(exercises);
