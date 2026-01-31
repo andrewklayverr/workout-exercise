@@ -1,8 +1,8 @@
 import { useState, useContext } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import "../styles/Login.css"; // 
+import api from "../services/api"; // ✅ usa a baseURL correta
+import "../styles/Login.css";
 
 const Login = () => {
   const { login } = useContext(AuthContext);
@@ -14,7 +14,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", {
+      const res = await api.post("/auth/login", {
         email,
         password
       });
